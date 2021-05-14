@@ -2,10 +2,12 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet,SafeAreaView, Text, View, ColorSchemeName, TouchableOpacity, useColorScheme } from 'react-native';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { FunctionButton } from '../components/functionButton';
+import { GenericButton } from '../components/genericButton';
 import colors from '../constants/colors';
 
 
-type functionTypes = "percentage"|"equals"|"plus"|"minus"|"divide"|"multiply"|null
+export type functionTypes = "%"|"percentage"|"equals"|"plus"|"minus"|"divide"|"multiply"|null
 
 
 export default function MainScreen() {
@@ -55,7 +57,7 @@ export default function MainScreen() {
     }
 
     const onFunctionButtonPressed = (type:functionTypes) =>{
-
+        type = (type == "%"? "percentage": type);
         let disposableCalculatorValue = parseFloat(calculatorValue);
         if(disposableCalculatorValue.toString()[disposableCalculatorValue.toString().length-1] == "."){
             disposableCalculatorValue = parseFloat(disposableCalculatorValue.toString().substring(0, disposableCalculatorValue.toString().length-1) );
@@ -110,6 +112,17 @@ export default function MainScreen() {
         setCalculatorValue((parseFloat(calculatorValue) * -1).toString())
     }
 
+    const innerStyle = StyleSheet.create({
+        buttonStyleWithDynamicColor: {
+            ...styles.buttonGenericStyle,
+            color: colors[colorScheme || "light"].buttonColor
+        },
+        functionStyleTextWithDynamicColor: {
+            ...styles.buttonGenericStyle,
+            color: colors[colorScheme || "light"].actionButtonColor
+        }
+    });
+
   return (
       <View style={{
             flex: 1,
@@ -121,10 +134,7 @@ export default function MainScreen() {
                 style={
                     [
                     styles.containerText,
-                    styles.containerGeneric,
-                    {
-                        backgroundColor: ""
-                    }
+                    styles.containerGeneric
                 ]
                 }
             >
@@ -153,191 +163,92 @@ export default function MainScreen() {
                 <View
                     style={[styles.containerButtonRow]}
                 >
-                    <TouchableOpacity
-                        onPress={cleanMemory}
-                    >
-                        <Text
-                            style={[
-                                {
-                                 color: colors[colorScheme || "light"].buttonColor,
-                                },
-                                styles.buttonGenericStyle
-                            ]}
-                        >C</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={onMinusPlusPressed}
-                    >
-                        <Text
-                            style={[{
-                                color: colors[colorScheme || "light"].buttonColor,
-                               },
-                                styles.buttonGenericStyle
-                            ]}
-                        >±</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => onFunctionButtonPressed("percentage")}
-                    >
-                        <Text
-                            style={[{
-                                color: colors[colorScheme || "light"].buttonColor,
-                               },styles.buttonGenericStyle]}
-                        >%</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => onFunctionButtonPressed("divide")}
-                        style={
-                            functionButtonPressed == "divide"? {
-                                borderRadius: 10,
-                                backgroundColor: colors[colorScheme || "light"].actionButtonColorSelected
-                            }: null
-                        }
-                    >
-                        <Text
-                            style={[styles.buttonGenericStyle , {
-                                color: colors[colorScheme || "light"].actionButtonColor
-                            }]}
-                        >÷</Text>
-                    </TouchableOpacity>
+                    {
+                        ["C","±","%"].map((item) =>
+                            <GenericButton 
+                                item={item}
+                                colorScheme={colorScheme}
+                                onNumberButtonPress={
+                                    item == "C"?
+                                        cleanMemory
+                                    :
+                                    item == "±"?
+                                        onMinusPlusPressed
+                                    :
+                                    item == "%"?
+                                        onFunctionButtonPressed
+                                    : null
+                                }
+                            />
+                        )
+                    }
+                    <FunctionButton
+                        text={"÷"}
+                        colorScheme={colorScheme}
+                        functionButtonPressed={functionButtonPressed}
+                        onFunctionButtonPressed={onFunctionButtonPressed}
+                        type={"divide"}
+                    />
                 </View>
                 <View
                     style={[styles.containerButtonRow]}
                 >
-                    <TouchableOpacity
-                        onPress={() => onNumberButtonPress(7)}
-                    >
-                        <Text
-                            style={[{
-                                color: colors[colorScheme || "light"].buttonColor,
-                               },styles.buttonGenericStyle]}
-                        >7</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => onNumberButtonPress(8)}
-                    >
-                        <Text
-                            style={[{
-                                color: colors[colorScheme || "light"].buttonColor,
-                               },styles.buttonGenericStyle]}
-                        >8</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => onNumberButtonPress(9)}
-                    >
-                        <Text
-                            style={[{
-                                color: colors[colorScheme || "light"].buttonColor,
-                               },styles.buttonGenericStyle]}
-                        >9</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => onFunctionButtonPressed("multiply")}
-                        style={
-                            functionButtonPressed == "multiply"? {
-                                borderRadius: 10,
-                                backgroundColor: colors[colorScheme || "light"].actionButtonColorSelected
-                            }: null
-                        }
-                    >
-                        <Text
-                            style={[styles.buttonGenericStyle , {
-                                color: colors[colorScheme || "light"].actionButtonColor
-                            }]}
-                        >×</Text>
-                    </TouchableOpacity>
+                    {
+                        [7,8,9].map((item) =>
+                            <GenericButton 
+                                item={item}
+                                colorScheme={colorScheme}
+                                onNumberButtonPress={onNumberButtonPress}
+                            />
+                        )
+                    }
+                    <FunctionButton
+                        text={"×"}
+                        colorScheme={colorScheme}
+                        functionButtonPressed={functionButtonPressed}
+                        onFunctionButtonPressed={onFunctionButtonPressed}
+                        type={"multiply"}
+                    />
                 </View>
                 <View
                     style={[styles.containerButtonRow]}
                 >
-                    <TouchableOpacity
-                        onPress={() => onNumberButtonPress(4)}
-                    >
-                        <Text
-                            style={[{
-                                color: colors[colorScheme || "light"].buttonColor,
-                               },styles.buttonGenericStyle]}
-                        >4</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => onNumberButtonPress(5)}
-                    >
-                        <Text
-                            style={[{
-                                color: colors[colorScheme || "light"].buttonColor,
-                               },styles.buttonGenericStyle]}
-                        >5</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => onNumberButtonPress(6)}
-                    >
-                        <Text
-                            style={[{
-                                color: colors[colorScheme || "light"].buttonColor,
-                               },styles.buttonGenericStyle]}
-                        >6</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => onFunctionButtonPressed("minus")}
-                        style={
-                            functionButtonPressed == "minus"? {
-                                borderRadius: 10,
-                                backgroundColor: colors[colorScheme || "light"].actionButtonColorSelected
-                            }: null
-                        }
-                    >
-                        <Text
-                            style={[styles.buttonGenericStyle , {
-                                color: colors[colorScheme || "light"].actionButtonColor
-                            }]}
-                        >−</Text>
-                    </TouchableOpacity>
+                    {
+                        [4,5,6].map((item) =>
+                        <GenericButton 
+                            item={item}
+                            colorScheme={colorScheme}
+                            onNumberButtonPress={onNumberButtonPress}
+                        />
+                        )
+                    }
+                    <FunctionButton
+                        text={"−"}
+                        colorScheme={colorScheme}
+                        functionButtonPressed={functionButtonPressed}
+                        onFunctionButtonPressed={onFunctionButtonPressed}
+                        type={"minus"}
+                    />
                 </View>
                 <View
                     style={[styles.containerButtonRow]}
                 >
-                    <TouchableOpacity
-                        onPress={() => onNumberButtonPress(1)}
-                    >
-                        <Text
-                            style={[{
-                                color: colors[colorScheme || "light"].buttonColor,
-                               },styles.buttonGenericStyle]}
-                        >1</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => onNumberButtonPress(2)}
-                    >
-                        <Text
-                            style={[{
-                                color: colors[colorScheme || "light"].buttonColor,
-                               },styles.buttonGenericStyle]}
-                        >2</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => onNumberButtonPress(3)}
-                    >
-                        <Text
-                            style={[{
-                                color: colors[colorScheme || "light"].buttonColor,
-                               },styles.buttonGenericStyle]}
-                        >3</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => onFunctionButtonPressed("plus")}
-                        style={
-                            functionButtonPressed == "plus"? {
-                                borderRadius: 10,
-                                backgroundColor: colors[colorScheme || "light"].actionButtonColorSelected
-                            }: null
-                        }
-                    >
-                        <Text
-                            style={[styles.buttonGenericStyle , {
-                                color: colors[colorScheme || "light"].actionButtonColor
-                            }]}
-                        >+</Text>
-                    </TouchableOpacity>
+                    {
+                        [1,2,3].map((item) =>
+                            <GenericButton 
+                                item={item}
+                                colorScheme={colorScheme}
+                                onNumberButtonPress={onNumberButtonPress}
+                            />
+                        )
+                    }
+                    <FunctionButton
+                        text={"+"}
+                        colorScheme={colorScheme}
+                        functionButtonPressed={functionButtonPressed}
+                        onFunctionButtonPressed={onFunctionButtonPressed}
+                        type={"plus"}
+                    />
                 </View>
                 <View
                     style={[styles.containerButtonRow]}
@@ -349,33 +260,22 @@ export default function MainScreen() {
                             style={[styles.buttonGenericStyle]}
                         > </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={() => onNumberButtonPress(0)}
-                    >
-                        <Text
-                            style={[{
-                                color: colors[colorScheme || "light"].buttonColor,
-                               },styles.buttonGenericStyle]}
-                        >0</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={onCommaPressed}
-                    >
-                        <Text
-                            style={[{
-                                color: colors[colorScheme || "light"].buttonColor,
-                               },styles.buttonGenericStyle]}
-                        >.</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      onPress={() => onFunctionButtonPressed("equals")}
-                    >
-                        <Text
-                            style={[styles.buttonGenericStyle , {
-                                color: colors[colorScheme || "light"].actionButtonColor
-                            }]}
-                        >=</Text>
-                    </TouchableOpacity>
+                    {
+                        [0, "."].map((item) =>
+                            <GenericButton 
+                                item={item}
+                                colorScheme={colorScheme}
+                                onNumberButtonPress={item =="."? onCommaPressed : onNumberButtonPress}
+                            />
+                        )
+                    }
+                    <FunctionButton
+                        text={"="}
+                        colorScheme={colorScheme}
+                        functionButtonPressed={functionButtonPressed}
+                        onFunctionButtonPressed={onFunctionButtonPressed}
+                        type={"equals"}
+                    />
                 </View>
             </View>
             <StatusBar style="auto" />
@@ -383,7 +283,7 @@ export default function MainScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   containerText: {
     flex: 3/8,
     justifyContent: "flex-end",
