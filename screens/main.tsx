@@ -10,9 +10,7 @@ type functionTypes = "percentage"|"equals"|"plus"|"minus"|"divide"|"multiply"|nu
 
 export default function MainScreen() {
     const colorScheme:ColorSchemeName = useColorScheme();
-    
     const insets:EdgeInsets = useSafeAreaInsets();
-    console.log(colorScheme)
     
     const [ calculatorValue, setCalculatorValue ] = React.useState("0");
     const [ memoryValue, setMemoryValue ] = React.useState<null|number>(null);
@@ -27,7 +25,6 @@ export default function MainScreen() {
     }
 
     const onNumberButtonPress = (input:number) =>{
-        console.log(calculatorValue);
         if(calculatorValue.toString() == "0."){
             setCalculatorValue(calculatorValue + '' + input);
             if(functionButtonPressed != null){
@@ -88,7 +85,6 @@ export default function MainScreen() {
             setMemoryFunction( type != "equals"? type : null);
             setFunctionButtonPressed(type != "equals"? type : null);
 
-            console.log(disposableCalculatorValue, memoryValue)
         }else if( functionButtonPressed != type){
             setFunctionButtonPressed(type)
         }
