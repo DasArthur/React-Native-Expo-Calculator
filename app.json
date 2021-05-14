@@ -1,5 +1,6 @@
 {
   "expo": {
+    "userInterfaceStyle": "automatic",
     "name": "dali-dali-calculator",
     "slug": "dali-dali-calculator",
     "version": "1.0.0",

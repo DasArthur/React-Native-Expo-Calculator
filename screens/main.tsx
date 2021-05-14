@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet,SafeAreaView, Text, useColorScheme, View, ColorSchemeName, TouchableOpacity } from 'react-native';
+import { StyleSheet,SafeAreaView, Text, View, ColorSchemeName, TouchableOpacity, useColorScheme } from 'react-native';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 import colors from '../constants/colors';
 
@@ -10,8 +10,9 @@ type functionTypes = "percentage"|"equals"|"plus"|"minus"|"divide"|"multiply"|nu
 
 export default function MainScreen() {
     const colorScheme:ColorSchemeName = useColorScheme();
+    
     const insets:EdgeInsets = useSafeAreaInsets();
-    // console.log(colorScheme)
+    console.log(colorScheme)
     
     const [ calculatorValue, setCalculatorValue ] = React.useState("0");
     const [ memoryValue, setMemoryValue ] = React.useState<null|number>(null);
@@ -160,24 +161,32 @@ export default function MainScreen() {
                         onPress={cleanMemory}
                     >
                         <Text
-                            style={[styles.buttonGenericStyle]}
+                            style={[
+                                {
+                                 color: colors[colorScheme || "light"].buttonColor,
+                                },
+                                styles.buttonGenericStyle
+                            ]}
                         >C</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={onMinusPlusPressed}
                     >
                         <Text
-                            style={[
-                                styles.buttonGenericStyle,
-                                {}
+                            style={[{
+                                color: colors[colorScheme || "light"].buttonColor,
+                               },
+                                styles.buttonGenericStyle
                             ]}
-                        >+/-</Text>
+                        >±</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => onFunctionButtonPressed("percentage")}
                     >
                         <Text
-                            style={[styles.buttonGenericStyle]}
+                            style={[{
+                                color: colors[colorScheme || "light"].buttonColor,
+                               },styles.buttonGenericStyle]}
                         >%</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -203,21 +212,27 @@ export default function MainScreen() {
                         onPress={() => onNumberButtonPress(7)}
                     >
                         <Text
-                            style={[styles.buttonGenericStyle]}
+                            style={[{
+                                color: colors[colorScheme || "light"].buttonColor,
+                               },styles.buttonGenericStyle]}
                         >7</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => onNumberButtonPress(8)}
                     >
                         <Text
-                            style={[styles.buttonGenericStyle]}
+                            style={[{
+                                color: colors[colorScheme || "light"].buttonColor,
+                               },styles.buttonGenericStyle]}
                         >8</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => onNumberButtonPress(9)}
                     >
                         <Text
-                            style={[styles.buttonGenericStyle]}
+                            style={[{
+                                color: colors[colorScheme || "light"].buttonColor,
+                               },styles.buttonGenericStyle]}
                         >9</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -243,21 +258,27 @@ export default function MainScreen() {
                         onPress={() => onNumberButtonPress(4)}
                     >
                         <Text
-                            style={[styles.buttonGenericStyle]}
+                            style={[{
+                                color: colors[colorScheme || "light"].buttonColor,
+                               },styles.buttonGenericStyle]}
                         >4</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => onNumberButtonPress(5)}
                     >
                         <Text
-                            style={[styles.buttonGenericStyle]}
+                            style={[{
+                                color: colors[colorScheme || "light"].buttonColor,
+                               },styles.buttonGenericStyle]}
                         >5</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => onNumberButtonPress(6)}
                     >
                         <Text
-                            style={[styles.buttonGenericStyle]}
+                            style={[{
+                                color: colors[colorScheme || "light"].buttonColor,
+                               },styles.buttonGenericStyle]}
                         >6</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -283,21 +304,27 @@ export default function MainScreen() {
                         onPress={() => onNumberButtonPress(1)}
                     >
                         <Text
-                            style={[styles.buttonGenericStyle]}
+                            style={[{
+                                color: colors[colorScheme || "light"].buttonColor,
+                               },styles.buttonGenericStyle]}
                         >1</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => onNumberButtonPress(2)}
                     >
                         <Text
-                            style={[styles.buttonGenericStyle]}
+                            style={[{
+                                color: colors[colorScheme || "light"].buttonColor,
+                               },styles.buttonGenericStyle]}
                         >2</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => onNumberButtonPress(3)}
                     >
                         <Text
-                            style={[styles.buttonGenericStyle]}
+                            style={[{
+                                color: colors[colorScheme || "light"].buttonColor,
+                               },styles.buttonGenericStyle]}
                         >3</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -330,14 +357,18 @@ export default function MainScreen() {
                         onPress={() => onNumberButtonPress(0)}
                     >
                         <Text
-                            style={[styles.buttonGenericStyle]}
+                            style={[{
+                                color: colors[colorScheme || "light"].buttonColor,
+                               },styles.buttonGenericStyle]}
                         >0</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={onCommaPressed}
                     >
                         <Text
-                            style={[styles.buttonGenericStyle]}
+                            style={[{
+                                color: colors[colorScheme || "light"].buttonColor,
+                               },styles.buttonGenericStyle]}
                         >.</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
