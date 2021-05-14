@@ -22,6 +22,7 @@ export default function MainScreen() {
         setCalculatorValue("0");
         setMemoryValue(null);
         setFunctionButtonPressed(null);
+        setMemoryFunction(null);
     }
 
     const onNumberButtonPress = (input:number) =>{
@@ -44,10 +45,14 @@ export default function MainScreen() {
     }
 
     const onCommaPressed = () =>{
-        if(functionButtonPressed != null){
+        if(calculatorValue == "0" || functionButtonPressed != null ){
             setCalculatorValue( "0." );
         }else{
-            setCalculatorValue(calculatorValue+".")
+            if(calculatorValue.includes(".")){
+                return null
+            }else{
+                setCalculatorValue(calculatorValue+".")
+            }
         }
     }
 
