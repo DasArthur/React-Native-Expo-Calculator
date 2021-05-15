@@ -1,25 +1,23 @@
 import React from 'react';
-import { TouchableOpacity, Text,StyleSheet, ColorSchemeName } from "react-native"
+import { TouchableOpacity, Text } from "react-native"
 import colors from '../constants/colors';
 import { styles } from '../constants/styles';
 import { genericButtonType } from '../types';
 
-export const GenericButton = ({item, colorScheme, onNumberButtonPress}:genericButtonType) =>{
-    
-    const innerStyle = StyleSheet.create({
-        buttonGenericStyle: {
-            ...styles.buttonGenericStyle,
-            color: colors[colorScheme || "light"].buttonColor
-        }
-    });
+export const GenericButton = ({ item, colorScheme, onNumberButtonPress }: genericButtonType) => {
 
-    return(
-    <TouchableOpacity
-        onPress={() => onNumberButtonPress(item)}
+    return (
+        <TouchableOpacity
+            onPress={() => onNumberButtonPress(item)}
         >
-        <Text
-            style={innerStyle.buttonGenericStyle}
-        >{item}</Text>
-    </TouchableOpacity>
+            <Text
+                style={
+                    {
+                        ...styles.buttonGenericStyle,
+                        color: colors[colorScheme || "light"].buttonColor
+                    }
+                }
+            >{item}</Text>
+        </TouchableOpacity>
     )
 }
