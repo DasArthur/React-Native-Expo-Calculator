@@ -1,13 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet,SafeAreaView, Text, View, ColorSchemeName, TouchableOpacity, useColorScheme } from 'react-native';
+import { StyleSheet, Text, View, ColorSchemeName, TouchableOpacity, useColorScheme } from 'react-native';
 import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FunctionButton } from '../components/functionButton';
 import { GenericButton } from '../components/genericButton';
 import colors from '../constants/colors';
 
 
-export type functionTypes = "%"|"percentage"|"equals"|"plus"|"minus"|"divide"|"multiply"|null
+export type functionTypes = "%"|"equals"|"plus"|"minus"|"divide"|"multiply"|null
 
 
 export default function MainScreen() {
@@ -57,13 +57,12 @@ export default function MainScreen() {
     }
 
     const onFunctionButtonPressed = (type:functionTypes) =>{
-        type = (type == "%"? "percentage": type);
         let disposableCalculatorValue = parseFloat(calculatorValue);
         if(disposableCalculatorValue.toString()[disposableCalculatorValue.toString().length-1] == "."){
             disposableCalculatorValue = parseFloat(disposableCalculatorValue.toString().substring(0, disposableCalculatorValue.toString().length-1) );
         }
 
-        if(type == "percentage"){
+        if(type == "%"){
             let disposableValue = disposableCalculatorValue / 100;
             setCalculatorValue(disposableValue.toString());
         }else if(functionButtonPressed == null){
@@ -111,17 +110,6 @@ export default function MainScreen() {
     const onMinusPlusPressed = () =>{
         setCalculatorValue((parseFloat(calculatorValue) * -1).toString())
     }
-
-    const innerStyle = StyleSheet.create({
-        buttonStyleWithDynamicColor: {
-            ...styles.buttonGenericStyle,
-            color: colors[colorScheme || "light"].buttonColor
-        },
-        functionStyleTextWithDynamicColor: {
-            ...styles.buttonGenericStyle,
-            color: colors[colorScheme || "light"].actionButtonColor
-        }
-    });
 
   return (
       <View style={{
