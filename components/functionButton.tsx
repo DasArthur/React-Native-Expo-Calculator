@@ -2,10 +2,9 @@ import React from 'react';
 import { TouchableOpacity, Text,StyleSheet, ColorSchemeName } from "react-native"
 import colors from '../constants/colors';
 import { styles } from '../constants/styles';
-import { functionTypes } from '../types';
+import { functionButtonType } from '../types';
 
-
-export const FunctionButton = ({text, colorScheme, functionButtonPressed, onFunctionButtonPressed, type}:{text:string, colorScheme:ColorSchemeName,functionButtonPressed:functionTypes, onFunctionButtonPressed:any, type: functionTypes}) =>{
+export const FunctionButton = ({text, colorScheme, functionButtonPressed, onFunctionButtonPressed, type}:functionButtonType) =>{
 
     const innerStyle = StyleSheet.create({
         buttonGenericStyle: {

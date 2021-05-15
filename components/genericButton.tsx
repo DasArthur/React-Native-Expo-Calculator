@@ -2,9 +2,9 @@ import React from 'react';
 import { TouchableOpacity, Text,StyleSheet, ColorSchemeName } from "react-native"
 import colors from '../constants/colors';
 import { styles } from '../constants/styles';
+import { genericButtonType } from '../types';
 
-
-export const GenericButton = ({item, colorScheme, onNumberButtonPress}:{item:number|string, colorScheme:ColorSchemeName, onNumberButtonPress:any}) =>{
+export const GenericButton = ({item, colorScheme, onNumberButtonPress}:genericButtonType) =>{
     
     const innerStyle = StyleSheet.create({
         buttonGenericStyle: {
