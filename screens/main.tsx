@@ -29,11 +29,16 @@ export default function MainScreen() {
     const colorScheme: ColorSchemeName = useColorScheme();
     const insets: EdgeInsets = useSafeAreaInsets();
 
+    //Text to render
     const [calculatorValue, setCalculatorValue] = React.useState("0");
+    //Previous value when function was pressed
     const [memoryValue, setMemoryValue] = React.useState<null | number>(null);
+    //Used to know which was the last function pressed, so that when user presses equals sign we can do calculation 
     const [memoryFunction, setMemoryFunction] = React.useState<functionTypes>(null);
+    //Which function was pressed, so that we can do calculations
     const [functionButtonPressed, setFunctionButtonPressed] = React.useState<functionTypes>(null);
 
+    //Called when user presses "C"
     const cleanMemory = () => {
         setCalculatorValue("0");
         setMemoryValue(null);
