@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Text,StyleSheet, ColorSchemeName } from "react-native"
 import colors from '../constants/colors';
-import { styles } from '../screens/main';
+import { styles } from '../constants/styles';
 
 
 export const GenericButton = ({item, colorScheme, onNumberButtonPress}:{item:number|string, colorScheme:ColorSchemeName, onNumberButtonPress:any}) =>{

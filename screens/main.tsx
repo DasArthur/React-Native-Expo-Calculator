@@ -5,9 +5,24 @@ import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FunctionButton } from '../components/functionButton';
 import { GenericButton } from '../components/genericButton';
 import colors from '../constants/colors';
+import { styles } from '../constants/styles';
+import { functionTypes } from '../types';
 
-
-export type functionTypes = "%"|"equals"|"plus"|"minus"|"divide"|"multiply"|null
+const doCalculations = (type:functionTypes, value:number, memoryValue: number):number =>{
+    let disposableValue = 0;
+    if(memoryValue != null){
+        if(type == "plus"){
+            disposableValue = memoryValue + value;
+        }else if(type == "minus"){
+            disposableValue = memoryValue - value;
+        }else if(type == "divide"){
+            disposableValue = memoryValue / value;
+        }else if(type == "multiply"){
+            disposableValue = memoryValue * value;
+        }
+    }
+    return disposableValue;
+}
 
 
 export default function MainScreen() {
@@ -69,10 +84,10 @@ export default function MainScreen() {
             if(memoryValue != null){
                 let disposableValue = 0.0;
                 if(type != "equals"){
-                    disposableValue = doCalculations(type , disposableCalculatorValue);
+                    disposableValue = doCalculations(type , disposableCalculatorValue, memoryValue);
                     setMemoryValue(disposableValue);
                 }else{
-                    disposableValue = doCalculations(memoryFunction , disposableCalculatorValue);
+                    disposableValue = doCalculations(memoryFunction , disposableCalculatorValue, memoryValue);
                     //to clean history
                     setMemoryValue(null);
                 }
@@ -89,22 +104,6 @@ export default function MainScreen() {
         }else if( functionButtonPressed != type){
             setFunctionButtonPressed(type)
         }
-    }
-
-    const doCalculations = (type:functionTypes, value:number):number =>{
-        let disposableValue = 0;
-        if(memoryValue != null){
-            if(type == "plus"){
-                disposableValue = memoryValue + value;
-            }else if(type == "minus"){
-                disposableValue = memoryValue - value;
-            }else if(type == "divide"){
-                disposableValue = memoryValue / value;
-            }else if(type == "multiply"){
-                disposableValue = memoryValue * value;
-            }
-        }
-        return disposableValue;
     }
 
     const onMinusPlusPressed = () =>{
@@ -154,6 +153,7 @@ export default function MainScreen() {
                     {
                         ["C","±","%"].map((item) =>
                             <GenericButton 
+                                key={item} 
                                 item={item}
                                 colorScheme={colorScheme}
                                 onNumberButtonPress={
@@ -183,7 +183,8 @@ export default function MainScreen() {
                 >
                     {
                         [7,8,9].map((item) =>
-                            <GenericButton 
+                            <GenericButton
+                                key={item} 
                                 item={item}
                                 colorScheme={colorScheme}
                                 onNumberButtonPress={onNumberButtonPress}
@@ -204,6 +205,7 @@ export default function MainScreen() {
                     {
                         [4,5,6].map((item) =>
                         <GenericButton 
+                            key={item} 
                             item={item}
                             colorScheme={colorScheme}
                             onNumberButtonPress={onNumberButtonPress}
@@ -224,6 +226,7 @@ export default function MainScreen() {
                     {
                         [1,2,3].map((item) =>
                             <GenericButton 
+                                key={item} 
                                 item={item}
                                 colorScheme={colorScheme}
                                 onNumberButtonPress={onNumberButtonPress}
@@ -251,6 +254,7 @@ export default function MainScreen() {
                     {
                         [0, "."].map((item) =>
                             <GenericButton 
+                                key={item} 
                                 item={item}
                                 colorScheme={colorScheme}
                                 onNumberButtonPress={item =="."? onCommaPressed : onNumberButtonPress}
@@ -271,30 +275,3 @@ export default function MainScreen() {
   );
 }
 
-export const styles = StyleSheet.create({
-  containerText: {
-    flex: 3/8,
-    justifyContent: "flex-end",
-    alignItems: "flex-end"
-  },
-  containerGeneric: {
-    paddingHorizontal: 30,
-    paddingBottom: 10,
-  },
-  containerButtonRow: {
-    justifyContent: "space-between",
-    flexDirection: "row",
-    paddingBottom: 20
-  },
-  containerFunctionButtons: {
-    paddingHorizontal: 20,
-    paddingTop: 15,
-    flex: 5/8,
-    justifyContent: "space-around"
-  },
-  buttonGenericStyle: {
-      fontSize: 41,
-      padding: 16,
-      fontWeight: "500"
-  }
-});

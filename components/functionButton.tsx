@@ -1,7 +1,8 @@
 import React from 'react';
 import { TouchableOpacity, Text,StyleSheet, ColorSchemeName } from "react-native"
 import colors from '../constants/colors';
-import { functionTypes, styles } from '../screens/main';
+import { styles } from '../constants/styles';
+import { functionTypes } from '../types';
 
 
 export const FunctionButton = ({text, colorScheme, functionButtonPressed, onFunctionButtonPressed, type}:{text:string, colorScheme:ColorSchemeName,functionButtonPressed:functionTypes, onFunctionButtonPressed:any, type: functionTypes}) =>{
